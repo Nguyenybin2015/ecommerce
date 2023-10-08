@@ -1,0 +1,6 @@
+{
+    "require": {
+        "firebase/php-jwt": "^6.9",
+        "paragonie/sodium_compat": "^1.20"
+    }
+}
