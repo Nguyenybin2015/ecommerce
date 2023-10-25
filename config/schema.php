@@ -3,7 +3,7 @@ namespace config;
 
 use DatabaseService;
 
-require_once './config/database.php';
+require './config/database.php';
 class SchemaService
 {
     private $connection;
