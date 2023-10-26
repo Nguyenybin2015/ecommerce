@@ -2,6 +2,8 @@
 require_once('../constants/header.php');
 require_once('../config/database.php');
 require_once('../services/jwtHandler.php');
+$db = new DatabaseService();
+$connection = $db->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') :
     
@@ -34,10 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') :
     $sql = "SELECT * FROM `users` WHERE `email`='$email'";
     $query = mysqli_query($connection, $sql);
     $row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+    echo $row['id_user'];
     if ($row === null) sendJson(404, 'User not found! (Email is not registered)');
     if (!password_verify($password, $row['password'])) sendJson(401, 'Incorrect Password!');
     sendJson(200, '', [
-        'token' => encodeToken($row['id'])
+        'token' => encodeToken($row['id_user'])
     ]);
 endif;
 

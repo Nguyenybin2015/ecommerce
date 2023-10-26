@@ -1,6 +1,7 @@
 <?php
-require_once __DIR__ . "/vendor/autoload.php";
-require_once __DIR__ . "/sendJson.php";
+require_once "../vendor/autoload.php";
+require_once('../utils/sendJson.php');
+
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
