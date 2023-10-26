@@ -10,14 +10,15 @@ use Firebase\JWT\SignatureInvalidException;
 
 $tokenSecret = 'my_strong_token_secret';
 
-function encodeToken($data)
+function encodeToken($data, $is_admin)
 {
     global $tokenSecret;
     $token = array(
         'iss' => 'http://localhost/php/login-api/',
         'iat' => time(),
         'exp' => time() + 3600, // 1hr
-        'data' => $data
+        'data' => $data,
+        'isAdmin' => $is_admin
     );
     return JWT::encode($token, $tokenSecret, 'HS256');
 }

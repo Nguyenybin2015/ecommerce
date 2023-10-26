@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') :
     if ($row === null) sendJson(404, 'User not found! (Email is not registered)');
     if (!password_verify($password, $row['password'])) sendJson(401, 'Incorrect Password!');
     sendJson(200, '', [
-        'token' => encodeToken($row['id_user'])
+        'token' => encodeToken($row['id_user'], $row['is_admin'])
     ]);
 endif;
 
