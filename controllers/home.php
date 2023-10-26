@@ -5,13 +5,16 @@ header('Access-Control-Allow-Methods: GET');
 header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
-require_once __DIR__ . '/config/database.php';
-require_once __DIR__ . '/jwtHandler.php';
+require_once '../config/database.php';
+require_once '../services/jwtHandler.php';
+
+$db = new DatabaseService();
+$connection = $db->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') :
     $headers = getallheaders();
     if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) :
-        $data = decodeToken($matches[1]);
+        $data = decodeDataToken($matches[1]);
         $userId = (int) $data;
         if (!is_numeric($data)) sendJson(401, 'Invalid User!');
         $sql = "SELECT `id`,`name`,`email` FROM `users` WHERE `id`='$userId'";
@@ -25,4 +28,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') :
 endif;
 
 sendJson(405, 'Invalid Request Method. HTTP method should be GET');
-?>
