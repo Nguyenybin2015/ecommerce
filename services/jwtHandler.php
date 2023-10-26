@@ -23,12 +23,25 @@ function encodeToken($data, $is_admin)
     return JWT::encode($token, $tokenSecret, 'HS256');
 }
 
-function decodeToken($token)
+function decodeDataToken($token)
 {
     global $tokenSecret;
     try {
         $decode = JWT::decode($token, new Key($tokenSecret, 'HS256'));
         return $decode->data;
+    } catch (ExpiredException | SignatureInvalidException $e) {
+        sendJson(401, $e->getMessage());
+    } catch (UnexpectedValueException | Exception $e) {
+        sendJson(400, $e->getMessage());
+    }
+}
+
+function decodeAdminToken($token)
+{
+    global $tokenSecret;
+    try {
+        $decode = JWT::decode($token, new Key($tokenSecret, 'HS256'));
+        return $decode->is_admin;
     } catch (ExpiredException | SignatureInvalidException $e) {
         sendJson(401, $e->getMessage());
     } catch (UnexpectedValueException | Exception $e) {
