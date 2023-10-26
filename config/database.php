@@ -1,5 +1,4 @@
 <?php
-include_once './config/schema.php';
 class DatabaseService
 {
 
@@ -11,11 +10,11 @@ class DatabaseService
 
     public function getConnection()
     {
-        $this->connection = new mysqli($this->db_host, $this->db_user, '', $this->db_name);
-        if ($this->connection->connect_errno) {
-            echo "Failed to connect to MySQL: " . $this->connection->connect_error;
+        try {
+            $this->connection = new mysqli($this->db_host, $this->db_user, '', $this->db_name);
+        } catch (mysqli_sql_exception $exception) {
+            echo "Failed to connect to MySQL: " . $exception->getMessage();
         }
-        echo 'Successfully connected to MySQL';
         return $this->connection;
     }
 }
