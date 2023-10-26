@@ -111,6 +111,7 @@ class SchemaService
             `SHOES` ADD CONSTRAINT `shoes_id_information_foreign` FOREIGN KEY(`id_information`) REFERENCES `INFORMATION`(`id_information`);
         ALTER TABLE
             `COMMENT` ADD CONSTRAINT `comment_id_shoe_foreign` FOREIGN KEY(`id_shoe`) REFERENCES `SHOES`(`id_shoe`);";
-        $this->connection->query($sql);
+        // $this->connection->query($sql);
     }
 }
+?>
