@@ -4,5 +4,13 @@ class Admin{
   public function __construct() {
     
   }
-  
+  function addProduct(){
+    
+  }
+  function updateProduct(){
+    
+  }
+  function delProduct(){
+    
+  }
 }
