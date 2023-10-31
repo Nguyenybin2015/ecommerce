@@ -14,6 +14,7 @@ class Admin
   }
   function addProduct()
   {
+    
   }
   function updateProduct()
   {
