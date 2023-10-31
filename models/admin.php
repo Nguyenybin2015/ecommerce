@@ -25,15 +25,16 @@ class Admin
                 `information`.`id_color` = '$idColorProduct',
                 `information`.`image` = '$imageProduct',
                 `information`.`id_brand` = '$idBrandProduct',
-                `information`.`description` = '$description'  
-            WHERE `shoes`.`id_shoe`= '$id_shoe'";
-    return mysqli_query($connection, $sql);
+                `information`.`description` = '$descriptionProduct'  
+            WHERE `information`.`id_information` = `shoes`.`id_information`
+            AND `shoes`.`id_shoe`= '$id_shoe'";
+    return mysqli_query($this->connection, $sql);
   }
   function delProduct($tableName, $colWhere, $valueWhere)
   {
-    $sql = "DELETE FROM `shoes`, `information`
-            WHERE `information`.`id_information` = `shoes`.`id_information`
-            AND `shoes`.`id_shoe`= '$id_shoe'";
-    return mysqli_query($connection, $sql);
+    $sql = "DELETE `shoes`, `information`
+            FROM `shoes` inner join `information` on `information`.`id_information` = `shoes`.`id_information`
+            WHERE `shoes`.`id_shoe`= '$id_shoe'";
+    return mysqli_query($this->connection, $sql);
   }
 }
