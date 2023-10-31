@@ -12,9 +12,15 @@ class Admin
     $this->db = new DatabaseService();
     $this->connection = $this->db->getConnection();
   }
-  function addProduct()
+  function addProduct($nameProduct, $priceProduct, $imageProduct, $idSizeProduct, $idColorProduct, $idBrandProduct, $descriptionProduct)
   {
+    $id_information = uniqid();
 
+    $sql = "INSERT INTO `information`(`id_information`, 'image',`id_size`,`id_color`,'id_brand','description') 
+            VALUES('$id_information', '$imageProduct', '$idSizeProduct', '$idColorProduct','$idBrandProduct', '$descriptionProduct');
+            INSERT INTO `shoes`(`name`,`price`,`id_information`) 
+            VALUES('$nameProduct','$priceProduct','$id_information')";
+    $query = mysqli_query($connection, $sql);
   }
   function updateProduct($nameProduct, $priceProduct, $idSizeProduct, $idColorProduct, $imageProduct, $idBrandProduct, $descriptionProduct, $id_shoe)
   {
