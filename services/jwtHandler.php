@@ -14,7 +14,7 @@ function encodeToken($data, $is_admin)
 {
     global $tokenSecret;
     $token = array(
-        'iss' => 'http://localhost/php/login-api/',
+        'iss' => 'http://localhost/api-ecommerce/api/controllers/login.php',
         'iat' => time(),
         'exp' => time() + 3600, // 1hr
         'data' => $data,
@@ -36,7 +36,7 @@ function decodeDataToken($token)
     }
 }
 
-function decodeAdminToken($token)
+function checkAdmin($token)
 {
     global $tokenSecret;
     try {

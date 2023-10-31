@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') :
     $row_num = mysqli_num_rows($query);
 
     if ($row_num > 0) sendJson(422, 'This E-mail already in use!');
-
-    $sql = "INSERT INTO `users`(`id_user`,`name`,`email`,`password`) VALUES('test1', '$name','$email','$hash_password')";
+    $id = uniqid();
+    $sql = "INSERT INTO `users`(`id_user`,`name`,`email`,`password`) VALUES('$id', '$name','$email','$hash_password')";
     $query = mysqli_query($connection, $sql);
     if ($query) sendJson(201, 'You have successfully registered.');
     sendJson(500, 'Something going wrong.');

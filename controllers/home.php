@@ -15,9 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') :
     $headers = getallheaders();
     if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) :
         $data = decodeDataToken($matches[1]);
-        $userId = (int) $data;
-        if (!is_numeric($data)) sendJson(401, 'Invalid User!');
-        $sql = "SELECT `id`,`name`,`email` FROM `users` WHERE `id`='$userId'";
+        $userId = $data;
+        $sql = "SELECT `id_user`,`name`,`email` FROM `users` WHERE `id_user`='$userId'";
         $query = mysqli_query($connection, $sql);
         $row = mysqli_fetch_array($query, MYSQLI_ASSOC);
         if ($row === null) sendJson(404, 'User not found!');
