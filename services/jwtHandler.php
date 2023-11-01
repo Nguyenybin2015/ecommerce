@@ -41,7 +41,10 @@ function checkAdmin($token)
     global $tokenSecret;
     try {
         $decode = JWT::decode($token, new Key($tokenSecret, 'HS256'));
-        return $decode->isAdmin;
+        if (!$decode->isAdmin) {
+            sendJson(403, 'Unauthorized access.');
+        }
+        return true;
     } catch (ExpiredException | SignatureInvalidException $e) {
         sendJson(401, $e->getMessage());
     } catch (UnexpectedValueException | Exception $e) {
