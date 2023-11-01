@@ -6,10 +6,11 @@ ALTER TABLE
     `ORDER_ITEM` ADD PRIMARY KEY(`id_order_item`);
 CREATE TABLE `INFORMATION`(
     `id_information` CHAR(36) NOT NULL,
-    `id_shoe_type` CHAR(36) NOT NULL,
     `id_size` CHAR(36) NOT NULL,
     `id_color` CHAR(36) NOT NULL,
     `id_brand` CHAR(36) NOT NULL,
+    `amount` INT NOT NULL,
+    `image` VARCHAR(255) NOT NULL,
     `description` TEXT NOT NULL
 );
 ALTER TABLE
@@ -20,16 +21,15 @@ CREATE TABLE `BRAND`(
 );
 ALTER TABLE
     `BRAND` ADD PRIMARY KEY(`id_brand`);
-CREATE TABLE `SHOES`(
-    `id_shoe` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `SHOES` (
+    `id_shoe` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `price` DOUBLE NOT NULL,
     `id_information` CHAR(36) NOT NULL,
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-ALTER TABLE
-    `SHOES` ADD PRIMARY KEY(`id_shoe`);
+
 CREATE TABLE `COLOR`(
     `id_color` CHAR(36) NOT NULL,
     `name` VARCHAR(255) NOT NULL
@@ -53,12 +53,12 @@ CREATE TABLE `ORDER`(
 );
 ALTER TABLE
     `ORDER` ADD PRIMARY KEY(`id_order`);
-CREATE TABLE `SHOE_TYPE`(
-    `id_shoe_type` CHAR(36) NOT NULL,
-    `name` VARCHAR(255) NOT NULL
-);
-ALTER TABLE
-    `SHOE_TYPE` ADD PRIMARY KEY(`id_shoe_type`);
+-- CREATE TABLE `SHOE_TYPE`(
+--     `id_shoe_type` CHAR(36) NOT NULL,
+--     `name` VARCHAR(255) NOT NULL
+-- );
+-- ALTER TABLE
+--     `SHOE_TYPE` ADD PRIMARY KEY(`id_shoe_type`);
 CREATE TABLE `USERS`(
     `id_user` CHAR(36) NOT NULL,
     `name` VARCHAR(250) NOT NULL,
@@ -90,9 +90,12 @@ ALTER TABLE
     `INFORMATION` ADD CONSTRAINT `information_id_size_foreign` FOREIGN KEY(`id_size`) REFERENCES `SIZE`(`id_size`);
 ALTER TABLE
     `ORDER` ADD CONSTRAINT `order_id_user_foreign` FOREIGN KEY(`id_user`) REFERENCES `USERS`(`id_user`);
-ALTER TABLE
-    `INFORMATION` ADD CONSTRAINT `information_id_shoe_type_foreign` FOREIGN KEY(`id_shoe_type`) REFERENCES `SHOE_TYPE`(`id_shoe_type`);
+-- ALTER TABLE
+--     `INFORMATION` ADD CONSTRAINT `information_id_shoe_type_foreign` FOREIGN KEY(`id_shoe_type`) REFERENCES `SHOE_TYPE`(`id_shoe_type`);
 ALTER TABLE
     `SHOES` ADD CONSTRAINT `shoes_id_information_foreign` FOREIGN KEY(`id_information`) REFERENCES `INFORMATION`(`id_information`);
 ALTER TABLE
     `COMMENT` ADD CONSTRAINT `comment_id_shoe_foreign` FOREIGN KEY(`id_shoe`) REFERENCES `SHOES`(`id_shoe`);
+
+
+    

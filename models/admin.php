@@ -12,17 +12,17 @@ class Admin
     $this->db = new DatabaseService();
     $this->connection = $this->db->getConnection();
   }
-  function addProduct($nameProduct, $priceProduct, $imageProduct, $idSizeProduct, $idColorProduct, $idBrandProduct, $descriptionProduct)
+  function addProduct($nameProduct, $priceProduct, $imageProduct, $idSizeProduct, $idColorProduct, $idBrandProduct, $descriptionProduct, $amountProduct)
   {
     $id_information = uniqid();
 
-    $sql = "INSERT INTO `information`(`id_information`, 'image',`id_size`,`id_color`,'id_brand','description') 
-            VALUES('$id_information', '$imageProduct', '$idSizeProduct', '$idColorProduct','$idBrandProduct', '$descriptionProduct');
+    $sql = "INSERT INTO `information`(`id_information`, `image`, `amount`, `id_size`,`id_color`,'id_brand','description') 
+            VALUES('$id_information', '$imageProduct', '$amountProduct', '$idSizeProduct', '$idColorProduct','$idBrandProduct', '$descriptionProduct');
             INSERT INTO `shoes`(`name`,`price`,`id_information`) 
             VALUES('$nameProduct','$priceProduct','$id_information')";
-    $query = mysqli_query($this->connection, $sql);
+    return mysqli_query($this->connection, $sql);
   }
-  function updateProduct($nameProduct, $priceProduct, $idSizeProduct, $idColorProduct, $imageProduct, $idBrandProduct, $descriptionProduct, $id_shoe)
+  function updateProduct($nameProduct, $priceProduct, $idSizeProduct, $idColorProduct, $imageProduct, $idBrandProduct, $descriptionProduct, $id_shoe, $amountProduct)
   {
     $sql = "UPDATE `shoes`, `information`
             SET `shoes`.`name` = '$nameProduct',
@@ -32,6 +32,7 @@ class Admin
                 `information`.`image` = '$imageProduct',
                 `information`.`id_brand` = '$idBrandProduct',
                 `information`.`description` = '$descriptionProduct'  
+                `information`.`amount` = '$amountProduct'  
 
             WHERE `information`.`id_information` = `shoes`.`id_information`
             AND `shoes`.`id_shoe`= '$id_shoe'";
