@@ -6,14 +6,9 @@ require_once '../services/product.php';
 require_once '../models/admin.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  addProduct();  
-} else {
-  sendJson(405, 'Invalid Request Method. HTTP method should be POST');
-}
-
-
-if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+  addProduct();
+} elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
   updateProduct();
 } else {
-  sendJson(405, 'Invalid Request Method. HTTP method should be PUT');
+  sendJson(405, 'Invalid Request Method. HTTP method should be POST or PUT');
 }

@@ -1,4 +1,4 @@
-x<?php
+<?php
 require_once('../constants/header.php');
 require_once '../config/database.php';
 require_once '../services/jwtHandler.php';
