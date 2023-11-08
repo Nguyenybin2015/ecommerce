@@ -1,9 +1,3 @@
-CREATE TABLE `ORDER_ITEM`(
-    `id_order_item` CHAR(36) NOT NULL,
-    `id_shoe` INT NOT NULL
-);
-ALTER TABLE
-    `ORDER_ITEM` ADD PRIMARY KEY(`id_order_item`);
 CREATE TABLE `INFORMATION`(
     `id_information` CHAR(36) NOT NULL,
     `id_size` CHAR(36) NOT NULL,
@@ -47,7 +41,8 @@ ALTER TABLE
 CREATE TABLE `ORDER`(
     `id_order` CHAR(36) NOT NULL,
     `id_user` CHAR(36) NOT NULL,
-    `id_order_item` CHAR(36) NOT NULL,
+    `id_shoe` INT NOT NULL,
+    `quantity` INT NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL
 );
@@ -81,15 +76,13 @@ ALTER TABLE
 ALTER TABLE
     `INFORMATION` ADD CONSTRAINT `information_id_brand_foreign` FOREIGN KEY(`id_brand`) REFERENCES `BRAND`(`id_brand`);
 ALTER TABLE
-    `ORDER_ITEM` ADD CONSTRAINT `order_item_id_shoe_foreign` FOREIGN KEY(`id_shoe`) REFERENCES `SHOES`(`id_shoe`);
+    `ORDER` ADD CONSTRAINT `order_id_shoe_foreign` FOREIGN KEY(`id_shoe`) REFERENCES `SHOES`(`id_shoe`);
+ALTER TABLE
+    `ORDER` ADD CONSTRAINT `order_id_user_foreign` FOREIGN KEY(`id_user`) REFERENCES `USERS`(`id_user`);
 ALTER TABLE
     `COMMENT` ADD CONSTRAINT `comment_id_user_foreign` FOREIGN KEY(`id_user`) REFERENCES `USERS`(`id_user`);
 ALTER TABLE
-    `ORDER` ADD CONSTRAINT `order_id_order_item_foreign` FOREIGN KEY(`id_order_item`) REFERENCES `ORDER_ITEM`(`id_order_item`);
-ALTER TABLE
     `INFORMATION` ADD CONSTRAINT `information_id_size_foreign` FOREIGN KEY(`id_size`) REFERENCES `SIZE`(`id_size`);
-ALTER TABLE
-    `ORDER` ADD CONSTRAINT `order_id_user_foreign` FOREIGN KEY(`id_user`) REFERENCES `USERS`(`id_user`);
 -- ALTER TABLE
 --     `INFORMATION` ADD CONSTRAINT `information_id_shoe_type_foreign` FOREIGN KEY(`id_shoe_type`) REFERENCES `SHOE_TYPE`(`id_shoe_type`);
 ALTER TABLE
