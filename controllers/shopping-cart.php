@@ -1,25 +1,23 @@
 <?php
-require_once('../constants/header.php');
+require_once '../constants/header.php';
 require_once '../config/database.php';
 require_once '../services/jwtHandler.php';
+require_once '../models/shoppingCart.php';
+require_once '../services/shoppping-cart.php';
 
 $db = new DatabaseService();
 $connection = $db->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  // getAllProduct()
+  getAllProduct();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // AddProduct
-  // totalPriceProduct
-  // choose
-  // byChosenProduct
-
+  addProduct();
 }
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-  // UpdateProductQuantity
+  updateProductQuantity();
 }
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-  // RemoveProduct
+  removeProduct();
 }

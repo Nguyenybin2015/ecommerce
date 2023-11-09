@@ -43,17 +43,12 @@ CREATE TABLE `ORDER`(
     `id_user` CHAR(36) NOT NULL,
     `id_shoe` INT NOT NULL,
     `quantity` INT NOT NULL,
-    `created_at` DATETIME NOT NULL,
-    `updated_at` DATETIME NOT NULL
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY `uk_id_shoe` (`id_shoe`)
 );
 ALTER TABLE
     `ORDER` ADD PRIMARY KEY(`id_order`);
--- CREATE TABLE `SHOE_TYPE`(
---     `id_shoe_type` CHAR(36) NOT NULL,
---     `name` VARCHAR(255) NOT NULL
--- );
--- ALTER TABLE
---     `SHOE_TYPE` ADD PRIMARY KEY(`id_shoe_type`);
 CREATE TABLE `USERS`(
     `id_user` CHAR(36) NOT NULL,
     `name` VARCHAR(250) NOT NULL,
@@ -83,8 +78,6 @@ ALTER TABLE
     `COMMENT` ADD CONSTRAINT `comment_id_user_foreign` FOREIGN KEY(`id_user`) REFERENCES `USERS`(`id_user`);
 ALTER TABLE
     `INFORMATION` ADD CONSTRAINT `information_id_size_foreign` FOREIGN KEY(`id_size`) REFERENCES `SIZE`(`id_size`);
--- ALTER TABLE
---     `INFORMATION` ADD CONSTRAINT `information_id_shoe_type_foreign` FOREIGN KEY(`id_shoe_type`) REFERENCES `SHOE_TYPE`(`id_shoe_type`);
 ALTER TABLE
     `SHOES` ADD CONSTRAINT `shoes_id_information_foreign` FOREIGN KEY(`id_information`) REFERENCES `INFORMATION`(`id_information`);
 ALTER TABLE

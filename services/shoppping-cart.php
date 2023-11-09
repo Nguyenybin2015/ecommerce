@@ -1,4 +1,6 @@
 <?php
+require_once '../models/shoppingCart.php';
+
 function getAllProduct()
 {
 
@@ -6,17 +8,13 @@ function getAllProduct()
   if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
     $data = json_decode(file_get_contents('php://input'));
 
-    $requiredFields = [
-      'idUser',
-      'idShoe'
-    ];
-    $id_user = trim($data->idUser);
-    $id_shoe = trim($data->idShoe);
+    $id_user = decodeDataToken($matches[1]);
 
-    // $add = $admin->addProduct();
+    $shoppingCart = new ShoppingCart();
+    $getAll = $shoppingCart->getAllProduct($id_user);
 
-    if ($add) {
-      sendJson(201, 'Product added successfully!');
+    if ($getAll) {
+      sendJson(201, 'Successfully!', $getAll);
     } else {
       sendJson(500, 'Failed to add the product.');
     }
@@ -32,16 +30,18 @@ function addProduct()
     $data = json_decode(file_get_contents('php://input'));
 
     $requiredFields = [
-      'idUser',
-      'idShoe'
+      'idShoe',
+      'quantity'
     ];
-    $id_user = trim($data->idUser);
+    $id_user = decodeDataToken($matches[1]);
     $id_shoe = trim($data->idShoe);
+    $quantity = trim($data->quantity);
 
-    // $add = $admin->addProduct();
+    $shoppingCart = new ShoppingCart();
+    $add = $shoppingCart->addProduct($id_user, $id_shoe, $quantity);
 
     if ($add) {
-      sendJson(201, 'Product added successfully!');
+      sendJson(201, 'Product added to shopping cart successfully!');
     } else {
       sendJson(500, 'Failed to add the product.');
     }
@@ -49,7 +49,7 @@ function addProduct()
     sendJson(403, "Authorization Token is Missing!");
   }
 }
-function updateProduct()
+function updateProductQuantity()
 {
 
   $headers = getallheaders();
@@ -57,16 +57,17 @@ function updateProduct()
     $data = json_decode(file_get_contents('php://input'));
 
     $requiredFields = [
-      'idUser',
-      'idShoe'
+      'idOrder',
+      'quantity'
     ];
-    $id_user = trim($data->idUser);
-    $id_shoe = trim($data->idShoe);
+    $id_order = trim($data->idOrder);
+    $quantity = trim($data->quantity);
 
-    // $add = $admin->addProduct();
+    $shoppingCart = new ShoppingCart();
+    $updateQuantity = $shoppingCart->updateProductQuantity($id_order, $quantity);
 
-    if ($add) {
-      sendJson(201, 'Product added successfully!');
+    if ($updateQuantity) {
+      sendJson(201, 'Product in cart updated successfully!');
     } else {
       sendJson(500, 'Failed to add the product.');
     }
@@ -82,16 +83,15 @@ function removeProduct()
     $data = json_decode(file_get_contents('php://input'));
 
     $requiredFields = [
-      'idUser',
-      'idShoe'
+      'idOrder'
     ];
-    $id_user = trim($data->idUser);
-    $id_shoe = trim($data->idShoe);
+    $id_order = trim($data->idOrder);
 
-    // $add = $admin->addProduct();
+    $shoppingCart = new ShoppingCart();
+    $remove = $shoppingCart->removeProduct($id_order);
 
-    if ($add) {
-      sendJson(201, 'Product added successfully!');
+    if ($remove) {
+      sendJson(201, 'Product in cart removed successfully!');
     } else {
       sendJson(500, 'Failed to add the product.');
     }
