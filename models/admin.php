@@ -12,30 +12,67 @@ class Admin
     $this->connection = $this->db->getConnection();
   }
   function addProduct($nameProduct, $priceProduct, $imageProduct, $idSizeProduct, $idColorProduct, $idBrandProduct, $descriptionProduct, $amountProduct)
-  {
+{
     $id_information = uniqid();
 
-    $sql = "INSERT INTO `information`(`id_information`, `image`, `amount`, `id_size`,`id_color`,'id_brand','description') 
-            VALUES('$id_information', '$imageProduct', '$amountProduct', '$idSizeProduct', '$idColorProduct','$idBrandProduct', '$descriptionProduct');
-            INSERT INTO `shoes`(`name`,`price`,`id_information`) 
-            VALUES('$nameProduct','$priceProduct','$id_information')";
-    return mysqli_query($this->connection, $sql);
-  }
+    // Insert data into the 'information' table
+    $sql_information = "INSERT INTO `information` (`id_information`, `image`, `amount`, `id_size`, `id_color`, `id_brand`, `description`) 
+                        VALUES ('$id_information', '$imageProduct', '$amountProduct', '$idSizeProduct', '$idColorProduct', '$idBrandProduct', '$descriptionProduct')";
+
+    // Execute the query for 'information' table
+    $result_information = mysqli_query($this->connection, $sql_information);
+
+    if ($result_information) {
+        // Insert data into the 'shoes' table if the 'information' insertion was successful
+        $sql_shoes = "INSERT INTO `shoes` (`name`, `price`, `id_information`) 
+                      VALUES ('$nameProduct', '$priceProduct', '$id_information')";
+
+        // Execute the query for 'shoes' table
+        $result_shoes = mysqli_query($this->connection, $sql_shoes);
+
+        // Return the result of the 'shoes' table query
+        return $result_shoes;
+    } else {
+        // Return false if the 'information' insertion failed
+        return false;
+    }
+}
+
   function updateProduct($nameProduct, $priceProduct, $idSizeProduct, $idColorProduct, $imageProduct, $idBrandProduct, $descriptionProduct, $id_shoe, $amountProduct)
   {
-    $sql = "UPDATE `shoes`, `information`
-            SET `shoes`.`name` = '$nameProduct',
-                `shoes`.`price` = '$priceProduct',
-                `information`.`id_size` = '$idSizeProduct',
-                `information`.`id_color` = '$idColorProduct',
-                `information`.`image` = '$imageProduct',
-                `information`.`id_brand` = '$idBrandProduct',
-                `information`.`description` = '$descriptionProduct'  
-                `information`.`amount` = '$amountProduct'  
+    function updateProduct($nameProduct, $priceProduct, $idSizeProduct, $idColorProduct, $imageProduct, $idBrandProduct, $descriptionProduct, $id_shoe, $amountProduct)
+{
+    $id_information = uniqid();
 
-            WHERE `information`.`id_information` = `shoes`.`id_information`
-            AND `shoes`.`id_shoe`= '$id_shoe'";
-    return mysqli_query($this->connection, $sql);
+    // Update `information` table
+    $sqlInfo = "UPDATE `information`
+                SET `image` = '$imageProduct',
+                    `amount` = '$amountProduct',
+                    `id_size` = '$idSizeProduct',
+                    `id_color` = '$idColorProduct',
+                    `id_brand` = '$idBrandProduct',
+                    `description` = '$descriptionProduct'
+                WHERE `id_information` = '$id_information'";
+
+    // Update `shoes` table
+    $sqlShoes = "UPDATE `shoes`
+                 SET `name` = '$nameProduct',
+                     `price` = '$priceProduct',
+                     `id_information` = '$id_information'
+                 WHERE `id_shoe` = '$id_shoe'";
+
+    // Perform the queries
+    $resultInfo = mysqli_query($this->connection, $sqlInfo);
+    $resultShoes = mysqli_query($this->connection, $sqlShoes);
+
+    // Check for errors
+    if ($resultInfo && $resultShoes) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
   }
   function delProduct($id_shoe, $colWhere, $valueWhere)
   {
