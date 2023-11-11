@@ -9,15 +9,13 @@ $db = new DatabaseService();
 $connection = $db->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  getAllProduct();
+  getAllProduct($_GET);
 }
-
+if($_SERVER['REQUEST_METHOD'] === 'PUT') {
+  updateProductQuantity($_GET);
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   addProduct();
-}
-if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-  updateProductQuantity();
-}
-if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-  removeProduct();
+}if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+  removeProduct($_GET);
 }

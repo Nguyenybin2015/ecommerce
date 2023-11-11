@@ -37,48 +37,14 @@ class Admin
         return false;
     }
 }
-
-  function updateProduct($nameProduct, $priceProduct, $idSizeProduct, $idColorProduct, $imageProduct, $idBrandProduct, $descriptionProduct, $id_shoe, $amountProduct)
+  function delProduct($delParams)
   {
-    function updateProduct($nameProduct, $priceProduct, $idSizeProduct, $idColorProduct, $imageProduct, $idBrandProduct, $descriptionProduct, $id_shoe, $amountProduct)
-{
-    $id_information = uniqid();
+    $id_shoe = mysqli_real_escape_string($this->connection, $delParams['id_shoe']);
 
-    // Update `information` table
-    $sqlInfo = "UPDATE `information`
-                SET `image` = '$imageProduct',
-                    `amount` = '$amountProduct',
-                    `id_size` = '$idSizeProduct',
-                    `id_color` = '$idColorProduct',
-                    `id_brand` = '$idBrandProduct',
-                    `description` = '$descriptionProduct'
-                WHERE `id_information` = '$id_information'";
-
-    // Update `shoes` table
-    $sqlShoes = "UPDATE `shoes`
-                 SET `name` = '$nameProduct',
-                     `price` = '$priceProduct',
-                     `id_information` = '$id_information'
-                 WHERE `id_shoe` = '$id_shoe'";
-
-    // Perform the queries
-    $resultInfo = mysqli_query($this->connection, $sqlInfo);
-    $resultShoes = mysqli_query($this->connection, $sqlShoes);
-
-    // Check for errors
-    if ($resultInfo && $resultShoes) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-  }
-  function delProduct($id_shoe, $colWhere, $valueWhere)
-  {
     $sql = "DELETE `shoes`, `information`
-            FROM `shoes` inner join `information` on `information`.`id_information` = `shoes`.`id_information`
-            WHERE `shoes`.`id_shoe`= '$id_shoe'";
+          FROM `shoes` inner join `information` on `information`.`id_information` = `shoes`.`id_information`
+          WHERE `shoes`.`id_shoe`= '$id_shoe'";
+          
     return mysqli_query($this->connection, $sql);
   }
 }
