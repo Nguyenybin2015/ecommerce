@@ -1,99 +1,90 @@
 <?php
 require_once '../models/shoppingCart.php';
 
-function getAllProduct()
+function getAllProduct($getParams)
 {
-
   $headers = getallheaders();
-  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
-    $data = json_decode(file_get_contents('php://input'));
 
-    $id_user = decodeDataToken($matches[1]);
+    if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
 
-    $shoppingCart = new ShoppingCart();
-    $getAll = $shoppingCart->getAllProduct($id_user);
-
-    if ($getAll) {
-      sendJson(201, 'Successfully!', $getAll);
+      $shoppingCart = new ShoppingCart();
+      $getAll = $shoppingCart->getAllProduct($getParams);
+  
+      if ($getAll) {
+        sendJson(200, 'Success', $getAll);
+      } else {
+        sendJson(500, 'Failed to get all the product.');
+      }
     } else {
-      sendJson(500, 'Failed to add the product.');
+      sendJson(403, "Authorization Token is Missing!");
     }
-  } else {
-    sendJson(403, "Authorization Token is Missing!");
-  }
 }
 function addProduct()
 {
+    // Get request headers
+    $headers = getallheaders();
 
-  $headers = getallheaders();
-  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
-    $data = json_decode(file_get_contents('php://input'));
+    // Check for Authorization header
+    if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+        // Decode token
+        $id_user = decodeDataToken($matches[1]);
 
-    $requiredFields = [
-      'idShoe',
-      'quantity'
-    ];
-    $id_user = decodeDataToken($matches[1]);
-    $id_shoe = trim($data->idShoe);
-    $quantity = trim($data->quantity);
+        // Validate and sanitize input parameters
+        $id_shoe = isset($_POST['id_shoe']) ? trim($_POST['id_shoe']) : null;
+        $quantity = isset($_POST['quantity']) ? trim($_POST['quantity']) : null;
 
-    $shoppingCart = new ShoppingCart();
-    $add = $shoppingCart->addProduct($id_user, $id_shoe, $quantity);
+        // Check if required parameters are present
+        if ($id_shoe !== null && $quantity !== null) {
+            $shoppingCart = new ShoppingCart();
+            $add = $shoppingCart->addProduct($id_user, $id_shoe, $quantity);
 
-    if ($add) {
-      sendJson(201, 'Product added to shopping cart successfully!');
+            // Check if the product was added successfully
+            if ($add) {
+                sendJson(201, 'Product added to the shopping cart successfully!');
+            } else {
+                sendJson(500, 'Failed to add the product.');
+            }
+        } else {
+            // Handle missing or invalid parameters
+            sendJson(400, 'Invalid or missing parameters.');
+        }
     } else {
-      sendJson(500, 'Failed to add the product.');
+        // Handle missing Authorization header
+        sendJson(403, 'Authorization Token is Missing!');
     }
-  } else {
-    sendJson(403, "Authorization Token is Missing!");
-  }
 }
-function updateProductQuantity()
+
+function removeProduct($delParams)
 {
-
   $headers = getallheaders();
-  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
-    $data = json_decode(file_get_contents('php://input'));
 
-    $requiredFields = [
-      'idOrder',
-      'quantity'
-    ];
-    $id_order = trim($data->idOrder);
-    $quantity = trim($data->quantity);
+  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
 
     $shoppingCart = new ShoppingCart();
-    $updateQuantity = $shoppingCart->updateProductQuantity($id_order, $quantity);
-
-    if ($updateQuantity) {
-      sendJson(201, 'Product in cart updated successfully!');
-    } else {
-      sendJson(500, 'Failed to add the product.');
-    }
-  } else {
-    sendJson(403, "Authorization Token is Missing!");
-  }
-}
-function removeProduct()
-{
-
-  $headers = getallheaders();
-  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
-    $data = json_decode(file_get_contents('php://input'));
-
-    $requiredFields = [
-      'idOrder'
-    ];
-    $id_order = trim($data->idOrder);
-
-    $shoppingCart = new ShoppingCart();
-    $remove = $shoppingCart->removeProduct($id_order);
+    $remove = $shoppingCart->removeProduct($delParams);
 
     if ($remove) {
-      sendJson(201, 'Product in cart removed successfully!');
+      sendJson(201, 'Product delete successfully!');
     } else {
-      sendJson(500, 'Failed to add the product.');
+      sendJson(500, 'Failed to delete the product.');
+    }
+  } else {
+    sendJson(403, "Authorization Token is Missing!");
+  }
+}
+
+function updateProductQuantity($quantityParams){
+  $headers = getallheaders();
+
+  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+
+    $shoppingCart = new ShoppingCart();
+    $remove = $shoppingCart->updateProductQuantity($quantityParams);
+
+    if ($remove) {
+      sendJson(201, 'Product update successfully!');
+    } else {
+      sendJson(500, 'Failed to update the product.');
     }
   } else {
     sendJson(403, "Authorization Token is Missing!");
