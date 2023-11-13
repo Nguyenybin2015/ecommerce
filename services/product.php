@@ -13,7 +13,7 @@ function addProduct()
 
     if (isset($_FILES['imageFile'])) {
       $targetDirectory = "../public/img/"; // Replace with your target directory
-      $dirFile = "/ecommerce/public/img/". basename($_FILES["imageFile"]["name"]);
+      $dirFile = "/ecommerce/public/img/" . basename($_FILES["imageFile"]["name"]);
       $targetFile = $targetDirectory . basename($_FILES["imageFile"]["name"]);
 
       // You may want to add more validation and checks here for security and file type
@@ -22,13 +22,13 @@ function addProduct()
         // The file has been successfully uploaded, proceed to save the other data
         $imageProduct = $dirFile;
 
-      $nameProduct = trim($_POST['nameProduct']);
-      $priceProduct = trim($_POST['priceProduct']);
-      $idSizeProduct = trim($_POST['idSizeProduct']);
-      $idColorProduct = trim($_POST['idColorProduct']);
-      $idBrandProduct = trim($_POST['idBrandProduct']);
-      $descriptionProduct = trim($_POST['descriptionProduct']);
-      $amountProduct = trim($_POST['amountProduct']);
+        $nameProduct = trim($_POST['nameProduct']);
+        $priceProduct = trim($_POST['priceProduct']);
+        $idSizeProduct = trim($_POST['idSizeProduct']);
+        $idColorProduct = trim($_POST['idColorProduct']);
+        $idBrandProduct = trim($_POST['idBrandProduct']);
+        $descriptionProduct = trim($_POST['descriptionProduct']);
+        $amountProduct = trim($_POST['amountProduct']);
         // Instantiate the Admin class and add product
         $admin = new Admin();
         $add = $admin->addProduct(
@@ -56,43 +56,59 @@ function addProduct()
   } else {
     sendJson(403, "Authorization Token is Missing!");
   }
-
-
 }
 
-function delProduct($delParams) {
+function delProduct($delParams)
+{
   $headers = getallheaders();
 
-    if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
-      $admin = checkAdmin($matches[1]);
+  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+    $admin = checkAdmin($matches[1]);
 
-      $admin = new Admin();
-      $add = $admin->delProduct($delParams);
-  
-      if ($add) {
-        sendJson(201, 'Product delete successfully!');
-      } else {
-        sendJson(500, 'Failed to delete the product.');
-      }
+    $admin = new Admin();
+    $add = $admin->delProduct($delParams);
+
+    if ($add) {
+      sendJson(201, 'Product delete successfully!');
     } else {
-      sendJson(403, "Authorization Token is Missing!");
+      sendJson(500, 'Failed to delete the product.');
     }
+  } else {
+    sendJson(403, "Authorization Token is Missing!");
+  }
 }
 
-function getProduct($getParams){
+function getProduct($getParams)
+{
   $headers = getallheaders();
 
-    if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
 
-      $product = new Product();
-      $get = $product->getProduct($getParams);
-  
-      if ($get) {
-        sendJson(200, 'Success', $get);
-      } else {
-        sendJson(500, 'Failed to get the product.');
-      }
+    $product = new Product();
+    $get = $product->getProduct($getParams);
+
+    if ($get) {
+      sendJson(200, 'Success', $get);
     } else {
-      sendJson(403, "Authorization Token is Missing!");
+      sendJson(500, 'Failed to get the product.');
     }
+  } else {
+    sendJson(403, "Authorization Token is Missing!");
+  }
+}
+function getAllProductService()
+{
+  $headers = getallheaders();
+
+  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+    $product = new Product();
+    $get = $product->getAllProduct();
+    if ($get) {
+      sendJson(200, 'Success', $get);
+    } else {
+      sendJson(500, 'Failed to get the product.');
+    }
+  } else {
+    sendJson(403, "Authorization Token is Missing!");
+  }
 }
