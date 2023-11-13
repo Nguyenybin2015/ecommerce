@@ -7,8 +7,11 @@ require_once '../models/admin.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   addProduct();
-} elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
   updateProduct();
-} else {
+} elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+  delProduct();
+}
+else {
   sendJson(405, 'Invalid Request Method. HTTP method should be POST or PUT');
 }

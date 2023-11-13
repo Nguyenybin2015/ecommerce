@@ -86,17 +86,17 @@ function updateProduct()
         $admin = checkAdmin($matches[1]);
 
         if ($admin) {
-            parse_str(file_get_contents("php://input"), $_PUT);
+            parse_str(file_get_contents("php://input"), $_GET);
 
             // Retrieve data from $_PUT
-            $nameProduct = isset($_PUT['nameProduct']) ? trim($_PUT['nameProduct']) : '';
-            $priceProduct = isset($_PUT['priceProduct']) ? trim($_PUT['priceProduct']) : '';
-            $idSizeProduct = isset($_PUT['idSizeProduct']) ? trim($_PUT['idSizeProduct']) : '';
-            $idColorProduct = isset($_PUT['idColorProduct']) ? trim($_PUT['idColorProduct']) : '';
-            $idBrandProduct = isset($_PUT['idBrandProduct']) ? trim($_PUT['idBrandProduct']) : '';
-            $descriptionProduct = isset($_PUT['descriptionProduct']) ? trim($_PUT['descriptionProduct']) : '';
-            $id_shoe = isset($_PUT['id_shoe']) ? trim($_PUT['id_shoe']) : '';
-            $amountProduct = isset($_PUT['amountProduct']) ? trim($_PUT['amountProduct']) : '';
+            $nameProduct = isset($_GET['nameProduct']) ? trim($_GET['nameProduct']) : '2';
+            $priceProduct = isset($_GET['priceProduct']) ? trim($_GET['priceProduct']) : '2';
+            $idSizeProduct = isset($_GET['idSizeProduct']) ? trim($_GET['idSizeProduct']) : '2';
+            $idColorProduct = isset($_GET['idColorProduct']) ? trim($_GET['idColorProduct']) : '2';
+            $idBrandProduct = isset($_GET['idBrandProduct']) ? trim($_GET['idBrandProduct']) : '2';
+            $descriptionProduct = isset($_GET['descriptionProduct']) ? trim($_GET['descriptionProduct']) : '2';
+            $id_shoe = isset($_GET['id_shoe']) ? trim($_GET['id_shoe']) : '2';
+            $amountProduct = isset($_GET['amountProduct']) ? trim($_GET['amountProduct']) : '2';
             $imageProduct = ''; // Initialize to empty string
 
             // Handle file upload
@@ -139,4 +139,3 @@ function updateProduct()
         }
     }
 }
-
