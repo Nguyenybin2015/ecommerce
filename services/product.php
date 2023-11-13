@@ -58,24 +58,23 @@ function addProduct()
   }
 }
 
-function delProduct($delParams)
-{
+function delProduct($delParams) {
   $headers = getallheaders();
 
-  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
-    $admin = checkAdmin($matches[1]);
+    if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+      $admin = checkAdmin($matches[1]);
 
-    $admin = new Admin();
-    $add = $admin->delProduct($delParams);
-
-    if ($add) {
-      sendJson(201, 'Product delete successfully!');
+      $admin = new Admin();
+      $add = $admin->delProduct($delParams);
+  
+      if ($add) {
+        sendJson(201, 'Product delete successfully!');
+      } else {
+        sendJson(500, 'Failed to delete the product.');
+      }
     } else {
-      sendJson(500, 'Failed to delete the product.');
+      sendJson(403, "Authorization Token is Missing!");
     }
-  } else {
-    sendJson(403, "Authorization Token is Missing!");
-  }
 }
 
 function getProduct($getParams)

@@ -1,4 +1,4 @@
-  <?php
+<?php
 require_once '../services/jwtHandler.php';
 require_once '../config/database.php';
   
@@ -37,6 +37,7 @@ class Admin
         return false;
     }
 }
+
   function delProduct($delParams)
   {
     $id_shoe = mysqli_real_escape_string($this->connection, $delParams['id_shoe']);
