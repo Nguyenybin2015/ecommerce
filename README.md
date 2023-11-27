@@ -9,8 +9,8 @@ This is an KingShoe API project developed by group 4.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [API Endpoints](#endpoints)
 - [Postman Collection](#postman-collection)
+- [API Endpoints](#endpoints)
 
 <div id='description'/>
   
@@ -56,6 +56,7 @@ composer require firebase/php-jwt
 For detailed API documentation and examples, you can refer to the [Postman Collection](https://www.getpostman.com/collections/0e38cb6c-b88a-4988-98f0-ac3d4a8d13a8) associated with this project.
 
 <div id='endpoints'/>
+  
 ## API Endpoints
 
 ### 1. Register
