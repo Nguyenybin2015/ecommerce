@@ -7,7 +7,9 @@ require_once '../models/admin.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   addProduct();
-} elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
+}elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+  updateProduct($_GET);
+}elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
   getProduct($_GET);
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE'){
   delProduct($_GET);

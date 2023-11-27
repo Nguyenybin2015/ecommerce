@@ -12,14 +12,12 @@ function addProduct()
     $admin = checkAdmin($matches[1]);
 
     if (isset($_FILES['imageFile'])) {
-      $targetDirectory = "../public/img/"; // Replace with your target directory
-      $dirFile = "/ecommerce/public/img/" . basename($_FILES["imageFile"]["name"]);
+      $targetDirectory = "../public/img/";
+      $dirFile = "/api/public/img/" . basename($_FILES["imageFile"]["name"]);
       $targetFile = $targetDirectory . basename($_FILES["imageFile"]["name"]);
 
-      // You may want to add more validation and checks here for security and file type
 
       if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
-        // The file has been successfully uploaded, proceed to save the other data
         $imageProduct = $dirFile;
 
         $nameProduct = trim($_POST['nameProduct']);
@@ -29,7 +27,7 @@ function addProduct()
         $idBrandProduct = trim($_POST['idBrandProduct']);
         $descriptionProduct = trim($_POST['descriptionProduct']);
         $amountProduct = trim($_POST['amountProduct']);
-        // Instantiate the Admin class and add product
+
         $admin = new Admin();
         $add = $admin->addProduct(
           $nameProduct,
@@ -57,24 +55,43 @@ function addProduct()
     sendJson(403, "Authorization Token is Missing!");
   }
 }
-
-function delProduct($delParams) {
+function updateProduct($productParams)
+{
   $headers = getallheaders();
 
-    if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
-      $admin = checkAdmin($matches[1]);
+  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+    $admin = checkAdmin($matches[1]);
 
-      $admin = new Admin();
-      $add = $admin->delProduct($delParams);
-  
-      if ($add) {
-        sendJson(201, 'Product delete successfully!');
-      } else {
-        sendJson(500, 'Failed to delete the product.');
-      }
+    $admin = new Admin();
+    $update = $admin->updateProduct($productParams);
+
+    if ($update) {
+      sendJson(201, 'Product update successfully!');
     } else {
-      sendJson(403, "Authorization Token is Missing!");
+      sendJson(500, 'Failed to update the product.');
     }
+  } else {
+    sendJson(403, "Authorization Token is Missing!");
+  }
+}
+function delProduct($delParams)
+{
+  $headers = getallheaders();
+
+  if (array_key_exists('Authorization', $headers) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+    $admin = checkAdmin($matches[1]);
+
+    $admin = new Admin();
+    $add = $admin->delProduct($delParams);
+
+    if ($add) {
+      sendJson(201, 'Product delete successfully!');
+    } else {
+      sendJson(500, 'Failed to delete the product.');
+    }
+  } else {
+    sendJson(403, "Authorization Token is Missing!");
+  }
 }
 
 function getProduct($getParams)
