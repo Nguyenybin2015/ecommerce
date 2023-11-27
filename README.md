@@ -46,6 +46,9 @@ cd ecommerce
 composer require firebase/php-jwt
 
 # Run init database file
+$ mysql -u root -p
+mysql > create database kingshoes;
+mysql < db/initTable.sql
 ```
 
 
