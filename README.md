@@ -13,11 +13,13 @@ This is an KingShoe API project developed by group 4.
 - [Postman Collection](#postman-collection)
 
 <div id='description'/>
+  
 ## Description
 
 This repository contains the source code for an e-commerce API developed using PHP. The API provides endpoints for user registration, login, managing products, shopping cart functionality, and more.
 
 <div id='features'/>
+  
 ## Features
 
 List the key features of your e-commerce project. For example:
@@ -28,6 +30,7 @@ List the key features of your e-commerce project. For example:
 - Order tracking
 
 <div id='installation'/>
+  
 ## Installation
 
 Describe how to install and set up your project locally. Include any dependencies that need to be installed and provide step-by-step instructions.
@@ -47,6 +50,7 @@ composer require firebase/php-jwt
 
 
 <div id='postman-collection'/>
+  
 ## Postman Collection
 
 For detailed API documentation and examples, you can refer to the [Postman Collection](https://www.getpostman.com/collections/0e38cb6c-b88a-4988-98f0-ac3d4a8d13a8) associated with this project.
