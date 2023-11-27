@@ -7,8 +7,6 @@ This is an KingShoe API project developed by group 4.
 - [Description](#description)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
 - [Postman Collection](#postman-collection)
 - [API Endpoints](#endpoints)
 
