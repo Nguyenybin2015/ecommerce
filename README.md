@@ -156,6 +156,6 @@ For detailed API documentation and examples, you can refer to the [Postman Colle
 ### 12. Update Product
 
 - **Method:** PUT
-- **URL:** [http://localhost/api-ecommerce/api/controllers/product.php?id_shoe=2&nameProduct=Update Product&priceProduct=9876&idSizeProduct=41&idColorProduct=2&idBrandProduct=2&description=Update Product](http://localhost/api-ecommerce/api/controllers/product.php?id_shoe=2&nameProduct=Update Product&priceProduct=9876&idSizeProduct=41&idColorProduct=2&idBrandProduct=2&description=Update Product)
+- **URL:** [http://localhost/api-ecommerce/api/controllers/product.php?id_shoe=2&nameProduct=UpdateProduct&priceProduct=9876&idSizeProduct=41&idColorProduct=2&idBrandProduct=2&description=UpdateProduct](http://localhost/api-ecommerce/api/controllers/product.php?id_shoe=2&nameProduct=UpdateProduct&priceProduct=9876&idSizeProduct=41&idColorProduct=2&idBrandProduct=2&description=UpdateProduct)
 - **Authentication:** Bearer Token
 
